@@ -1,43 +1,71 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 
-class App extends Component {
-  state = {
-    n: false,
-  };
+const App = () => {
+  const [notificationEnabled, setNotificationEnabled ] = useState(false)
 
-  functionA = () => {
-    this.setState({
-      n: !this.state.n,
-    });
-  };
+  // state = {
+  //   n: false,
+  // };
 
-  functionB = () => {
-    this.props.s(this.state);
-    if (this.state.n) {
-      alert("Se ha guardado la selecciòn de activar las notificaciones");
+  // functionA = () => {
+  //   this.setState({
+  //     n: !this.state.n,
+  //   });
+  // };
+
+  const toggle = () => {
+    setNotificationEnabled(!notificationEnabled)
+  }
+
+  // functionB = () => {
+  //   this.props.s(this.state);
+  //   if (this.state.n) {
+  //     alert("Se ha guardado la selecciòn de activar las notificaciones");
+  //   } else {
+  //     alert("Se ha guardado la selecciòn de desactivar las notificaciones");
+  //   }
+  // };
+
+  const showNotificationToggle = () => {
+    if (notificationEnabled) {
+      alert("Se ha guardado la selecciòn de activar las notificaciones")
     } else {
       alert("Se ha guardado la selecciòn de desactivar las notificaciones");
     }
-  };
+  }
 
-  functionC = () => {
-    if (this.state.n) {
-      return "Activas";
-    } else {
-      return "Inactivas";
-    }
-  };
+  // functionC = () => {
+  //   if (this.state.n) {
+  //     return "Activas";
+  //   } else {
+  //     return "Inactivas";
+  //   }
+  // };
+  const getNotificationStatus = () => {
+    if (notificationEnabled) {
+          return "Activas";
+        } else {
+          return "Inactivas";
+        }
+  }
 
-  functionD = () => {
-    if (this.state.n) {
+  // functionD = () => {
+  //   if (this.state.n) {
+  //     return "Desactivar notificaciones";
+  //   } else {
+  //     return "Activar notificaciones";
+  //   }
+  // };
+
+  const buttonText = () => {
+    if (notificationEnabled) {
       return "Desactivar notificaciones";
     } else {
       return "Activar notificaciones";
     }
-  };
+  }
 
-  render() {
     return (
       <div className="teste">
         <h1>
@@ -45,20 +73,20 @@ class App extends Component {
           email?
         </h1>
         <p>
-          Status: <b>{this.functionC()}</b>
+          Status: <b>{getNotificationStatus()}</b>
         </p>
         <br />
-        <button onClick={this.functionA}>{this.functionD()}</button>
+        <button onClick={toggle}>{buttonText()}</button>
         <br />
         <br />
         <br />
-        <button onClick={this.functionB} className="sa">
+        <button onClick={showNotificationToggle} className="sa">
           Guardar
         </button>
       </div>
     );
   }
-}
+
 
 const state = (state) => {
   return {
