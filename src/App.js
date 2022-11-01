@@ -1,72 +1,47 @@
 import React, { useState } from "react";
-import { connect } from "react-redux";
+// import { connect } from "react-redux";
+import { useDispatch, useStore } from 'react-redux';
+
 
 const App = () => {
-  const [notificationEnabled, setNotificationEnabled ] = useState(false)
+	const store = useStore()
 
-  // state = {
-  //   n: false,
-  // };
+  //notificationsEnabled del reducer -> undefined
+  console.log(store.getState());
+  const dispatch = useDispatch()
 
-  // functionA = () => {
-  //   this.setState({
-  //     n: !this.state.n,
-  //   });
-  // };
+  const [notificationEnabled, setNotificationEnabled] = useState(false);
 
   const toggle = () => {
-    setNotificationEnabled(!notificationEnabled)
-  }
-
-  // functionB = () => {
-  //   this.props.s(this.state);
-  //   if (this.state.n) {
-  //     alert("Se ha guardado la selecciòn de activar las notificaciones");
-  //   } else {
-  //     alert("Se ha guardado la selecciòn de desactivar las notificaciones");
-  //   }
-  // };
+    setNotificationEnabled(!notificationEnabled);
+  };
 
   const showNotificationToggle = () => {
-    if (notificationEnabled) {
-      alert("Se ha guardado la selecciòn de activar las notificaciones")
-    } else {
-      alert("Se ha guardado la selecciòn de desactivar las notificaciones");
-    }
-  }
+    console.log("notification enabled en app:", notificationEnabled);
 
-  // functionC = () => {
-  //   if (this.state.n) {
-  //     return "Activas";
-  //   } else {
-  //     return "Inactivas";
-  //   }
-  // };
+    dispatch({type: "SAVE_SETTINGS"}, {notificationsEnabled: notificationEnabled})
+
+    notificationEnabled
+      ? alert("Se ha guardado la selecciòn de activar las notificaciones")
+      : alert("Se ha guardado la selecciòn de desactivar las notificaciones");
+  };
+
   const getNotificationStatus = () => {
-    if (notificationEnabled) {
-          return "Activas";
-        } else {
-          return "Inactivas";
-        }
-  }
-
-  // functionD = () => {
-  //   if (this.state.n) {
-  //     return "Desactivar notificaciones";
-  //   } else {
-  //     return "Activar notificaciones";
-  //   }
-  // };
+    let status = "";
+    notificationEnabled ? (status = "Activas") : (status = "Inactivas");
+    return status;
+  };
 
   const buttonText = () => {
-    if (notificationEnabled) {
-      return "Desactivar notificaciones";
-    } else {
-      return "Activar notificaciones";
-    }
-  }
+    let text = "";
+    notificationEnabled
+      ? (text = "Desactivar notificaciones")
+      : (text = "Activar notificaciones");
+    return text;
+  };
 
-    return (
+  return (
+
       <div className="teste">
         <h1>
           ¿Desesa recibir notificaciones sobre la serie Rick y Morty en su
@@ -84,20 +59,9 @@ const App = () => {
           Guardar
         </button>
       </div>
-    );
-  }
 
-
-const state = (state) => {
-  return {
-    n: state.n,
-  };
+  );
 };
 
-const mdtp = (dispatch) => {
-  return {
-    s: (ss) => dispatch({ type: "SAVE_SETTINGS", ss }),
-  };
-};
+ export default App;
 
-export default connect(state, mdtp)(App);

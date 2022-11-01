@@ -1,12 +1,16 @@
-export default function reducer(state, action) {
-  if (typeof state === "undefined") {
-    state = { n: false };
-  }
+const initState = {
+  notificationsEnabled: false,
+};
 
-  if (action.type === "SAVE_SETTINGS") {
-    let n = action.n;
-    return { ...state, n };
-  } else {
-    return state;
+const notificationReducer = (state = initState, action) => {
+  switch (action.type) {
+    case "SAVE_SETTINGS":
+      console.log("reducer activo");
+      return { ...state, notificationsEnabled: action.notificationsEnabled };
+
+    default:
+      return state;
   }
-}
+};
+
+export default notificationReducer;
